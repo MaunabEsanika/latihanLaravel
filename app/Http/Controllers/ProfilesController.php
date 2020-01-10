@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
 class ProfilesController extends Controller
 {
@@ -16,7 +17,28 @@ class ProfilesController extends Controller
     public function edit(User $user){
        $this->authorize('update', $user->profile);
 
-        return view('profiles.edit', compact('user'));
+       $postCount = Cache::remember(
+           'count.posts'. $user->id,
+           now()->addSeconds(5),
+           function()use ($user){
+               return $user->posts->count();
+           });
+
+       $followersCount = Cache::remember(
+           'count.posts'. $user->id,
+           now()->addSeconds(5),
+           function()use ($user){
+               return $user->profile->followers->count();;
+           });
+
+       $followingCount = Cache::remember(
+           'count.posts'. $user->id,
+           now()->addSeconds(5),
+           function()use ($user){
+               return $user->following->count();;
+           });
+
+       return view('profiles.edit', compact('user', 'postCount', 'followersCount', 'followingCount'));
     }
 
     public function update(User $user){
