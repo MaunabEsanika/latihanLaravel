@@ -26,10 +26,3 @@ Route::get('/profile/{user}', 'ApiController@getUserProfile');
 
 Route::get('/profiles', 'ApiController@getAllUsers');
 
-Route::get('/me', function (){
-    $user = auth('api')->user();
-    if ($user!=null){
-        return $user;
-    }
-    return "User not logged in";
-});
