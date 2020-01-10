@@ -24,4 +24,5 @@ Route::get('posts/{user}', 'ApiController@getUserPosts');
 
 Route::get('/profile/{user}', 'ApiController@getUserProfile');
 
-Route::get('profiles', 'ApiController@getAllUsers');
+Route::get('/profiles', 'ApiController@getAllUsers');
+
