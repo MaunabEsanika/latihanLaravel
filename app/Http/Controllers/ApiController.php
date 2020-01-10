@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
     public function getUserProfile(User $user){
-        return $user;
+        return $user->profile()->get();
     }
 
     public function getAllPosts(){
