@@ -38,7 +38,6 @@ class ProfilesController extends Controller
        $this->authorize('update', $user->profile);
 
 
-
        return view('profiles.edit', compact('user'));
     }
 
